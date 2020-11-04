@@ -1,0 +1,73 @@
+@themeColor:#539aed;
+@shadowColor:rgba(83, 154, 237, .3);
+@cricle-size: .5rem;
+
+.constructor-shadow {
+    box-shadow:
+        inset 15px 20px 20px 0px @shadowColor,
+        inset -15px -15px 20px 0px @shadowColor;
+    padding: 1%;
+    border: 1px solid @themeColor;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.square-wrapBg {
+    background: url(../images/title-bg-short.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.rectangle-wrapBg {
+    background: url(../images/title-bg.png) no-repeat;
+    background-size: 100% 100%;
+}
+
+.column-flex {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
+}
+
+.rows-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.constructor-layout {
+    margin: 1% auto 0.5%;
+    box-sizing: border-box;
+}
+
+// 复用样式 
+.circle {
+    &::before {
+        margin-right: 2%;
+        content: '';
+        display: inline-block;
+        width: @cricle-size;
+        height: @cricle-size;
+        background-color: @themeColor;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-top: -0.125rem;
+    }
+}
+
+.hander-line {
+    position: relative;
+    padding-bottom: 5%;
+    color: #FFF;
+
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url(../images/line-bottom.png) no-repeat;
+        background-size: 100%;
+        background-position-y: 100%;
+    }
+
+}

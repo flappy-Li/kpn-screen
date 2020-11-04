@@ -4,14 +4,16 @@ import router from './router'
 import store from './store'
 
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+import './assets/css/style.less';
 
-router.beforeEach((to, from, next) => {
-	if (to.meta.title) {
-	  document.title = to.meta.title;
-	}
-	next();
-})
+
+// router.beforeEach((to, from, next) => {
+// 	if (to.meta.title) {
+// 	  document.title = to.meta.title;
+// 	}
+// 	next();
+// })
 
 new Vue({
   router,
