@@ -2,18 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import echarts from 'echarts/lib/echarts'
+import 'echarts-gl';
+import Vcomp from './plugins/index'
+Vue.prototype.$echarts = echarts;
 
 
 Vue.config.productionTip = false;
 import './assets/css/style.less';
-
-
-// router.beforeEach((to, from, next) => {
-// 	if (to.meta.title) {
-// 	  document.title = to.meta.title;
-// 	}
-// 	next();
-// })
+Vue.use(Vcomp)
 
 new Vue({
   router,
