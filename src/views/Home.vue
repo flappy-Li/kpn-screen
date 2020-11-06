@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div class="home default-layout">
     <home-nav></home-nav>
   </div>
 </template>
@@ -21,6 +21,9 @@ export default {
 .home {
   height: 100%;
   width: 100%;
+  display: flex;
+  align-content: center;
+  justify-content: center;
   
 }
 </style>

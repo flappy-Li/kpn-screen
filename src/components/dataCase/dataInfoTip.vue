@@ -5,12 +5,12 @@
     </div>
 		<data-content>
 			<p class="title hander-line" slot="title-text">{{list.title }}</p>
-			<span class="text-size" slot="data-title">金额：</span>
+			<span class="text-size" slot="data-title">{{list.numTitle}}</span>
 			<span slot="data-num"
 				><i class="num-size" >{{ list.num }}</i
-				>万元</span
+				>{{list.unit}}</span
 			>
-			<span slot="data-num2">吨</span>
+			<span v-if="list.type" slot="data-num2" class="last-text"><i slot="data-unit">{{list.increase}}</i> {{list.amount}}</span>
 		</data-content>
   </div>
 </template>
@@ -23,7 +23,9 @@ export default {
     list: {
       type: Object,
       default() {
-        return {};
+        return {
+			type:true
+		};
       },
     },
   },
@@ -50,6 +52,7 @@ export default {
 		}
 	}
 	.data-content {
+		position: relative;
 		.title {
 			font-size: 2rem;
 		}
@@ -59,6 +62,11 @@ export default {
 		.num-size {
 			font-size: 2.3rem;
 			color:#539aed;;
+		}
+		.last-text {
+			position: absolute;
+			right: 0;
+			top: 50%;
 		}
 	}
 }

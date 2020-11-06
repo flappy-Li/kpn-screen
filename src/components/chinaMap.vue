@@ -18,7 +18,7 @@ export default {
       },
     },
   },
-  name:'chainaMap',
+  name:'chinaMap',
   data() {
     return {
       city: {

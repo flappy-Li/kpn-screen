@@ -1,5 +1,5 @@
 <template>
-  <div class="salesPlatform default-layout">
+  <div class="purchaseManage default-layout">
     <top-header>
       <p
         :data-text="titleName"
@@ -18,80 +18,104 @@
     </top-header>
     <div class="layout-content constructor-layout column-flex">
       <div class="top-content rows-flex">
-        <data-info-tip v-for="item in dataList" :key="item.title" :list="item" />
+        <data-info-tip
+          v-for="item in dataList"
+          :key="item.title"
+          :list="item"
+        />
+      </div>
+      <div class="center-content rows-flex">
+        <div class="bar-wrap wrap-style">
+          <div class="hander-top square-wrapBg">原纱每日采购量与库存</div>
+          <div class="echarts-wrap">
+            <sz-bar></sz-bar>
+          </div>
+        </div>
+        <div class="layout-wrap wrap-style column-flex">
+          <div class="hander-top square-wrapBg">采购降本分析</div>
+          <div class="seamless-wrap">
+            <div class="seamless">
+              <seamless :table-list="tableColor"></seamless>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="bottom-content rows-flex">
-        <div class="map-wrap wrap-style">
-          <div class="hander-top rectangle-wrapBg">销售情况分布</div>
-          <china-map />
-        </div>
-        <div class="list-wrap column-flex">
-          <div class="top-wrap wrap-style column-flex">
-            <div class="hander-top square-wrapBg">销量TOP10</div>
-            <div class="rows-flex seamless-wrap">
-              <div class="seamless">
-                <seamless :table-list="tableColor"></seamless>
-              </div>
-              <div class="seamless">
-                <seamless :table-list="tableColor"></seamless>
-              </div>
+        <div class="bar-wrap rows-flex">
+          <div class="bottom-ecarts wrap-style">
+            <div class="hander-top square-wrapBg">近30天分工厂采购量</div>
+            <div class="echarts-wrap">
+              <rankingbar/>
             </div>
           </div>
           <div class="bottom-ecarts wrap-style">
-            <div class="hander-top square-wrapBg">日销售额走势</div>
+            <div class="hander-top square-wrapBg">供应商准时交互率</div>
             <div class="echarts-wrap">
-              <line-echart 
-                :options='echartConfig'
-                :data-list="echartsData"
-              />
+              <rankingbar />
             </div>
+          </div>
+        </div>
+        <div class="bottom-ecarts wrap-style">
+          <div class="hander-top square-wrapBg">日采购金额走势图</div>
+          <div class="echarts-wrap">
+            <line-echart :options="echartConfig" :data-list="echartsData" />
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 <script>
-// @ is an alias to /src
 import topHeader from "@/components/topHeader.vue";
 import dataInfoTip from "@/components/dataCase/dataInfoTip.vue";
-
 export default {
-  name: "Home",
+  name: "purchaseManage",
+  components: {
+    topHeader,
+    dataInfoTip,
+  },
   data() {
     return {
       dataList: [
         {
-          title: "年销售",
-          numTitle:'金额：',
+          title: "月采购金额",
+          numTitle: "数值：",
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "元",
+          type: false,
         },
         {
-          title: "月销售",
-          numTitle:'金额：',
+          title: "日采购金额",
+          numTitle: "数值：",
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "元",
+          type: false,
         },
         {
-          title: "周销售",
-          numTitle:'金额：',
+          title: "日到货金额",
+          numTitle: "数值：",
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "元",
+          type: false,
         },
         {
-          title: "日销售",
-          numTitle:'金额：',
+          title: "待结算金额",
+          numTitle: "数值：",
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "元",
+          type: false,
         },
       ],
       tableColor: {
-        header: ["TOP10", "色号", "销量"],
+        header: [
+          "能源类型",
+          "所在地",
+          "能耗量",
+          "比前一日能耗变化",
+          "能耗总价",
+          "日期",
+        ],
         listData: [
           {
             title: "钱花哪了?一图带你读懂年轻人的消费观",
@@ -165,25 +189,29 @@ export default {
           },
         ],
       },
-      echartConfig:{
-        name:'单位：万',
-        status:false,
-        toolStyle: ['#4efeea','#258177'],
-        lineStyle:['#539aed'],
-        areaStyle:[[`rgba(46, 36, 130, 0.8)`,` rgba(46, 36, 130, 0.3)`]]
+      echartConfig: {
+        name: "单位：万",
+        status: false,
+        toolStyle: ["#4efeea", "#258177"],
+        lineStyle: ["#539aed"],
+        areaStyle: [[`rgba(46, 36, 130, 0.8)`, ` rgba(41, 71, 125, 0.6)`]],
       },
-      echartsData:{
-        x:['2020-11-05','2020-11-04','2020-11-03','2020-11-02','2020-11-01'],
-        y:[{
-            name:'日销售额',
-            value:[100,545,454,212,212]
-        }]
-      }
+      echartsData: {
+        x: [
+          "2020-11-05",
+          "2020-11-04",
+          "2020-11-03",
+          "2020-11-02",
+          "2020-11-01",
+        ],
+        y: [
+          {
+            name: "日销售额",
+            value: [100, 545, 454, 212, 212],
+          },
+        ],
+      },
     };
-  },
-  components: {
-    topHeader,
-    dataInfoTip,
   },
   computed: {
     titleName() {
@@ -197,7 +225,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.salesPlatform{
+.purchaseManage {
   height: 100%;
   width: 100%;
   .title-size {
@@ -212,53 +240,49 @@ export default {
     .top-content {
       width: 100%;
     }
-    .bottom-content {
-      height: 85%;
-      width: 100%;
-      .map-wrap {
+    .center-content {
+      height: 42%;
+      .bar-wrap {
+        position: relative;
         width: 54.5%;
         height: 100%;
-        #chinaMap {
-          height: 95%;
-          width: 100%;
-        }
       }
-      .list-wrap {
+      .layout-wrap {
         width: 45%;
         height: 100%;
-        .top-wrap,
-        .bottom-ecarts {
-          height: 49.25%;
+      }
+      .seamless-wrap {
+        position: relative;
+        height: 88%;
+        .seamless {
+          position: relative;
           width: 100%;
-          .seamless-wrap {
-            position: relative;
-            height: 88%;
-            .seamless {
-              position: relative;
-              width: 45%;
-              height: 100%;
-            }
-             &::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              height: 100%;
-              width: 0.1rem;
-              background-image: linear-gradient(to bottom, #539aed 0%, #539aed 50%, transparent 50%);
-              background-size: 0.1rem 1rem;
-              background-repeat: repeat-y;
-            }
-          }
-          .echarts-wrap {
-            position: relative;
-            height: 90%;
-            width: 100%;
-          }
+          height: 100%;
         }
       }
     }
+    .bottom-content {
+      height: 42%;
+      width: 100%;
+      .bar-wrap {
+        position: relative;
+        width: 54.5%;
+        height: 100%;
+        .bottom-ecarts {
+            width: 49.5%;
+        }
+      }
+      .top-wrap,
+      .bottom-ecarts {
+        height: 100%;
+        width: 45%;
+      }
+    }
+  }
+  .echarts-wrap {
+    position: relative;
+    height: 90%;
+    width: 100%;
   }
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="salesPlatform default-layout">
+  <div class="energyConsumMonitor default-layout">
     <top-header>
       <p
         :data-text="titleName"
@@ -18,32 +18,30 @@
     </top-header>
     <div class="layout-content constructor-layout column-flex">
       <div class="top-content rows-flex">
-        <data-info-tip v-for="item in dataList" :key="item.title" :list="item" />
+        <data-info-tip
+          v-for="item in dataList"
+          :key="item.title"
+          :list="item"
+        />
       </div>
       <div class="bottom-content rows-flex">
         <div class="map-wrap wrap-style">
-          <div class="hander-top rectangle-wrapBg">销售情况分布</div>
+          <div class="hander-top rectangle-wrapBg">集团能耗状态</div>
           <china-map />
         </div>
         <div class="list-wrap column-flex">
           <div class="top-wrap wrap-style column-flex">
-            <div class="hander-top square-wrapBg">销量TOP10</div>
+            <div class="hander-top square-wrapBg">能耗详情</div>
             <div class="rows-flex seamless-wrap">
-              <div class="seamless">
-                <seamless :table-list="tableColor"></seamless>
-              </div>
               <div class="seamless">
                 <seamless :table-list="tableColor"></seamless>
               </div>
             </div>
           </div>
           <div class="bottom-ecarts wrap-style">
-            <div class="hander-top square-wrapBg">日销售额走势</div>
+            <div class="hander-top square-wrapBg">集团总体能耗状况</div>
             <div class="echarts-wrap">
-              <line-echart 
-                :options='echartConfig'
-                :data-list="echartsData"
-              />
+              <line-echart :options="echartConfig" :data-list="echartsData" />
             </div>
           </div>
         </div>
@@ -62,36 +60,51 @@ export default {
     return {
       dataList: [
         {
-          title: "年销售",
-          numTitle:'金额：',
+          title: "集团总产量",
+          numTitle: null,
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "公斤",
+          type: true,
+          increase: "增数：",
+          amount: 20,
         },
         {
-          title: "月销售",
-          numTitle:'金额：',
+          title: "集团用水量",
+          numTitle: null,
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "立方",
+          type: true,
+          increase: "增数：",
+          amount: 20,
         },
         {
-          title: "周销售",
-          numTitle:'金额：',
+          title: "集团用电量",
+          numTitle: null,
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "KW·h",
+          type: true,
+          increase: "增数：",
+          amount: 20,
         },
         {
-          title: "日销售",
-          numTitle:'金额：',
+          title: "集团用蒸汽量",
+          numTitle: null,
           num: 1212.2,
-          unit:'万元',
-          amount:111
+          unit: "立方",
+          type: true,
+          increase: "增数：",
+          amount: 20,
         },
       ],
       tableColor: {
-        header: ["TOP10", "色号", "销量"],
+        header: [
+          "能源类型",
+          "所在地",
+          "能耗量",
+          "比前一日能耗变化",
+          "能耗总价",
+          "日期",
+        ],
         listData: [
           {
             title: "钱花哪了?一图带你读懂年轻人的消费观",
@@ -165,20 +178,28 @@ export default {
           },
         ],
       },
-      echartConfig:{
-        name:'单位：万',
-        status:false,
-        toolStyle: ['#4efeea','#258177'],
-        lineStyle:['#539aed'],
-        areaStyle:[[`rgba(46, 36, 130, 0.8)`,` rgba(46, 36, 130, 0.3)`]]
+      echartConfig: {
+        name: "单位：立方",
+        status: false,
+        toolStyle: ["#4efeea", "#258177"],
+        lineStyle: ["#eb2b5e"],
+        areaStyle: [[`rgba(139, 66, 80, 0.8)`, ` rgba(176, 79, 71, 0.8)`]],
       },
-      echartsData:{
-        x:['2020-11-05','2020-11-04','2020-11-03','2020-11-02','2020-11-01'],
-        y:[{
-            name:'日销售额',
-            value:[100,545,454,212,212]
-        }]
-      }
+      echartsData: {
+        x: [
+          "2020-11-05",
+          "2020-11-04",
+          "2020-11-03",
+          "2020-11-02",
+          "2020-11-01",
+        ],
+        y: [
+          {
+            name: "日销售额",
+            value: [100, 545, 454, 212, 212],
+          },
+        ],
+      },
     };
   },
   components: {
@@ -197,7 +218,7 @@ export default {
 </script>
 
 <style lang='less' scoped>
-.salesPlatform{
+.energyConsumMonitor {
   height: 100%;
   width: 100%;
   .title-size {
@@ -235,20 +256,8 @@ export default {
             height: 88%;
             .seamless {
               position: relative;
-              width: 45%;
+              width: 100%;
               height: 100%;
-            }
-             &::after {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 50%;
-              transform: translateX(-50%);
-              height: 100%;
-              width: 0.1rem;
-              background-image: linear-gradient(to bottom, #539aed 0%, #539aed 50%, transparent 50%);
-              background-size: 0.1rem 1rem;
-              background-repeat: repeat-y;
             }
           }
           .echarts-wrap {

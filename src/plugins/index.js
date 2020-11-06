@@ -5,11 +5,22 @@
  */
 
 
-import chainaMap from '@/components/chainaMap'
-import seamless from '@/components/seamless'
+import chinaMap from '@/components/chinaMap' // 2.5D中国地图
+import seamless from '@/components/seamless'   // 无缝滚动
+import lineEchart from '@/components/lineEchart' // 折线图
+// import dynamicLine from '@/components/dynamicLine' //动态折线图
+import szBar from '@/components/szBar' //双轴柱状图
+import rankingbar from '@/components/rankingbar' //排名柱状图
+
+
 const components = {
-    chainaMap,
-    seamless
+    chinaMap,
+    seamless,
+    lineEchart,
+    szBar,
+    rankingbar,
+    // dynamicLine,
+
 };
 
 const install = (Vue = {}) => {

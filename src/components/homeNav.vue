@@ -1,5 +1,5 @@
 <template>
-    <div class="homeNav">
+    <div class="homeNav ">
         <router-link 
             v-for= "item in routeList"
             v-show="item.name != 'Home'"
@@ -25,7 +25,14 @@ export default {
 
 <style lang="less">
     .homeNav {  
-        height: 100%;
-        width: 100%;
+        margin: auto;
+        text-align: center;
+        a {
+            padding: 1rem;
+            font-size: 3rem;
+            font-family: 'txwhgzb';
+            color: #b5d5ec;
+             text-shadow: 4px 4px 0px #000, 8px 8px 0px rgba(255, 255, 255, 0.3);
+        }
     }
 </style>

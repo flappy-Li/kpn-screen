@@ -14,10 +14,19 @@ const routes = [
     path: '/salesPlatform',
     name: 'salesPlatform',
     meta: { title: "销售信息平台", intro:'SALES INFORMATION PLATFORM'},
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "salesPlatform" */ '../views/salesPlatform.vue')
+  },
+  {
+    path: '/energyConsumMonitor',
+    name: 'energyConsumMonitor',
+    meta: { title: "能耗监控", intro:'ENERGY CONSUMATION MONITORING'},
+    component: () => import(/* webpackChunkName: "energyConsumMonitor" */ '../views/energyConsumMonitor.vue')
+  },
+  {
+    path: '/purchaseManage',
+    name: 'purchaseManage',
+    meta: { title: "采购信息平台", intro:'PURCHASING INFORMATION PLATFORM'},
+    component: () => import(/* webpackChunkName: "purchaseManage" */ '../views/purchaseManage.vue')
   }
 ]
 

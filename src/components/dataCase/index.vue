@@ -4,7 +4,9 @@
     <div class="data">
       <slot name="data-title"></slot>
       <slot name="data-num"></slot>
-      <slot name="data-num2"></slot>
+      <slot name="data-num2">
+        <slot name="data-unit"></slot>
+      </slot>
     </div>
   </div>
 </template>
@@ -21,6 +23,7 @@ export default {};
   box-sizing: border-box;
   .data {
     padding-top: 5%;
+    position: relative;
   }
 }
 </style>
