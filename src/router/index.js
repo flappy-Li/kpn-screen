@@ -27,6 +27,12 @@ const routes = [
     name: 'purchaseManage',
     meta: { title: "采购信息平台", intro:'PURCHASING INFORMATION PLATFORM'},
     component: () => import(/* webpackChunkName: "purchaseManage" */ '../views/purchaseManage.vue')
+  },
+  {
+    path: '/purchasePoll',
+    name: 'purchasePoll',
+    meta: { title: "销售下单-生产-发货流程", intro:'INFORMATION PLATFORM'},
+    component: () => import(/* webpackChunkName: "purchasePoll" */ '../views/purchasePoll.vue')
   }
 ]
 

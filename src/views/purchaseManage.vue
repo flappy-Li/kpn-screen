@@ -207,6 +207,12 @@ export default {
         y: [
           {
             name: "日销售额",
+            type:'line',
+            value: [100, 545, 454, 212, 212],
+          },
+           {
+            name: "月销售额",
+            type:'line',
             value: [100, 545, 454, 212, 212],
           },
         ],
