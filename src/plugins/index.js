@@ -4,21 +4,21 @@
  * 日期: 2020-11-5
  */
 
-
-import chinaMap from '@/components/chinaMap' // 2.5D中国地图
 import seamless from '@/components/seamless'   // 无缝滚动
-import lineEchart from '@/components/lineEchart' // 折线图
+
+// import chinaMap from '@/components/chinaMap' // 2.5D中国地图
+// import lineEchart from '@/components/lineEchart' // 折线图
 // import dynamicLine from '@/components/dynamicLine' //动态折线图
-import szBar from '@/components/szBar' //双轴柱状图
-import rankingbar from '@/components/rankingbar' //排名柱状图
+// import szBar from '@/components/szBar' //双轴柱状图
+// import rankingbar from '@/components/rankingbar' //排名柱状图
 
 
 const components = {
-    chinaMap,
     seamless,
-    lineEchart,
-    szBar,
-    rankingbar,
+    // chinaMap,
+    // lineEchart,
+    // szBar,
+    // rankingbar,
     // dynamicLine,
 
 };
