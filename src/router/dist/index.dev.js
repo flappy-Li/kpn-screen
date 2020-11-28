@@ -26,54 +26,36 @@ var routes = [{
   name: 'Home',
   component: _Home["default"]
 }, {
-  path: '/salesPlatform',
-  name: 'salesPlatform',
-  meta: {
-    title: "销售信息平台",
-    intro: 'SALES INFORMATION PLATFORM'
-  },
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/salesPlatform.vue'));
-    });
-  }
-}, {
-  path: '/energyConsumMonitor',
-  name: 'energyConsumMonitor',
-  meta: {
-    title: "能耗监控",
-    intro: 'ENERGY CONSUMATION MONITORING'
-  },
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/energyConsumMonitor.vue'));
-    });
-  }
-}, {
-  path: '/purchaseManage',
-  name: 'purchaseManage',
-  meta: {
-    title: "采购信息平台",
-    intro: 'PURCHASING INFORMATION PLATFORM'
-  },
-  component: function component() {
-    return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/purchaseManage.vue'));
-    });
-  }
-}, {
-  path: '/purchasePoll',
-  name: 'purchasePoll',
+  path: '/purchase',
+  name: 'purchase',
   meta: {
     title: "销售下单-生产-发货流程",
     intro: 'INFORMATION PLATFORM'
   },
   component: function component() {
     return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/purchasePoll.vue'));
+      return _interopRequireWildcard(require('../views/purchase.vue'));
     });
   }
-}];
+} // {
+//   path: '/salesPlatform',
+//   name: 'salesPlatform',
+//   meta: { title: "销售信息平台", intro:'SALES INFORMATION PLATFORM'},
+//   component: () => import(/* webpackChunkName: "salesPlatform" */ '../views/salesPlatform.vue')
+// },
+// {
+//   path: '/energyConsumMonitor',
+//   name: 'energyConsumMonitor',
+//   meta: { title: "能耗监控", intro:'ENERGY CONSUMATION MONITORING'},
+//   component: () => import(/* webpackChunkName: "energyConsumMonitor" */ '../views/energyConsumMonitor.vue')
+// },
+// {
+//   path: '/purchaseManage',
+//   name: 'purchaseManage',
+//   meta: { title: "采购信息平台", intro:'PURCHASING INFORMATION PLATFORM'},
+//   component: () => import(/* webpackChunkName: "purchaseManage" */ '../views/purchaseManage.vue')
+// }
+];
 var router = new _vueRouter["default"]({
   mode: 'history',
   base: process.env.BASE_URL,
