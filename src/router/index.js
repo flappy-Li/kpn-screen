@@ -1,39 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home,
-  },
-  {
-    path: '/purchase',
     name: 'purchase',
     meta: { title: "销售下单-生产-发货流程", intro:'INFORMATION PLATFORM'},
-    component: () => import(/* webpackChunkName: "purchase" */ '../views/purchase.vue')
+    component: () => import(/* webpackChunkName: "purchase" */ '../views/purchase.vue'),
   },
   // {
-  //   path: '/salesPlatform',
-  //   name: 'salesPlatform',
-  //   meta: { title: "销售信息平台", intro:'SALES INFORMATION PLATFORM'},
-  //   component: () => import(/* webpackChunkName: "salesPlatform" */ '../views/salesPlatform.vue')
+  //   path: '/purchase',
+  //   name: 'purchase',
+  //   meta: { title: "销售下单-生产-发货流程", intro:'INFORMATION PLATFORM'},
+  //   component: () => import(/* webpackChunkName: "purchase" */ '../views/purchase.vue')
   // },
-  // {
-  //   path: '/energyConsumMonitor',
-  //   name: 'energyConsumMonitor',
-  //   meta: { title: "能耗监控", intro:'ENERGY CONSUMATION MONITORING'},
-  //   component: () => import(/* webpackChunkName: "energyConsumMonitor" */ '../views/energyConsumMonitor.vue')
-  // },
-  // {
-  //   path: '/purchaseManage',
-  //   name: 'purchaseManage',
-  //   meta: { title: "采购信息平台", intro:'PURCHASING INFORMATION PLATFORM'},
-  //   component: () => import(/* webpackChunkName: "purchaseManage" */ '../views/purchaseManage.vue')
-  // }
 ]
 
 const router = new VueRouter({

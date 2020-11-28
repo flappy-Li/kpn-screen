@@ -1,20 +1,14 @@
 <template>
   <div class="home default-layout">
-    <home-nav></home-nav>
+   <router-view></router-view>
   </div>
 </template>
 
 <script>
 
 // @ is an alias to /src
-import homeNav from '@/components/homeNav.vue'
-
 export default {
   name: 'Home',
-  components: {
-    homeNav
-  }
-   
 }
 </script>
 <style lang="less">

@@ -41,7 +41,7 @@
                       >{{ ++index }}</span>
                   </td>
                   <td v-for="prop in item" :key="prop">
-                    <span>{{ prop}}</span>
+                    <span>{{ prop }}</span>
                   </td>
                 </tr>
               </tbody>
@@ -76,7 +76,7 @@ export default {
     optionSetting() {
       return {
         step: 0.5, // 数值越大速度滚动越快
-        limitMoveNum: 2, // 开始无缝滚动的数据量 this.dataList.length
+        limitMoveNum: 12, // 开始无缝滚动的数据量 this.dataList.length
         hoverStop: true, // 是否开启鼠标悬停stop
         direction: 1, // 0向下 1向上 2向左 3向右
         // autoPlay: false,
@@ -123,11 +123,16 @@ export default {
     .seamless-warp {
       overflow: hidden;
       visibility: visible;
+      .colorRed,.colorOrange {
+        color: #fff;
+        padding: 3px 6px;
+        border-radius: 4px;
+      }
       .colorRed {
-        color: #ff4669;
+        background: #ff4669;
       }
       .colorOrange {
-        color: #ffc956;
+         background: #ff4669;
       }
       .item {
         // height: auto;

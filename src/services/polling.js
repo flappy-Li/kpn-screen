@@ -1,8 +1,8 @@
 import { httpCreate } from './http.js';
 
-const  http = httpCreate('api/bigscreen/display/');
+const  http = httpCreate('dashboard/');
 export const polling = {
-    getPurchasePolling(tabId) {
-        return http.get(`machineInformation${tabId}`)
+    getPurchasePolling(orderId) {
+        return http.get(`liucheng?s=${orderId}`)
     }
 }

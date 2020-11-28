@@ -18,32 +18,42 @@
     </top-header>
     <div class="layout-content constructor-layout column-flex">
         <div class="flowChart">
+          <div class="input-layer" @click="open">采购单查询</div>
           <div class="backgroundChart-text"></div>
           <div class="tip-layer">
             <div class="column">
-              <div class="rectangle top rectangleActive"></div>
-              <div class="diamond center diamondActive"></div>
-              <div class="rectangle bottom"></div>
+              <div :class='["rectangle","top", {rectangleActive: status == 1}]'></div>
+              <div :class='["diamond", "center", {diamondActive: status == 2}]'></div>
+              <div :class="['rectangle', 'bottom', {rectangleActive: status == 3}]"></div>
             </div>
             <div class="rows">
-              <div class="rectangle bottom1"></div>
-              <div class="rectangle bottom2"></div>
-              <div class="rectangle bottom3"></div>
-              <div class="rectangle bottom4"></div>
+              <div :class="['rectangle', 'bottom1',{rectangleActive: status == 4}]"></div>
+              <div :class="['rectangle', 'bottom2',{rectangleActive: status == 5}]"></div>
+              <div :class="['rectangle', 'bottom3',{rectangleActive: status == 6}]"></div>
+              <div :class="['ellipse', 'bottom4',{ellipseActive: status == 7}]"></div>
             </div>
           </div>
           <div class="layout-wrap wrap-style column-flex">
             <div class="hander-top square-wrapBg">采购降本分析</div>
-              <div class="header-layer">
-                <p>操作人：<span>12456</span></p>
-                <p>创建时间：<span>12456</span></p>
-                <p>审批时间：<span>12456</span></p>
+              <div class="header-layer" v-if="![5,6].includes(oldStatus)">
+                <p>操作人：<span>{{ title.createName}}</span></p>
+                <p v-if="oldStatus !== 2">创建时间：<span>{{ title.createTime || '无'}}</span></p>
+                <p v-if="oldStatus == 2">审批时间：<span>{{title.createTime}}</span></p>
               </div>
               <div class="seamless-wrap">
-                <seamless :table-list="tableColor"></seamless>
+                <seamless :table-list="tableData"></seamless>
               </div>
           </div>
         </div>
+    </div>
+    <div class="dialog" v-show="dialogVisibility" >
+      <div class="input-wrap">
+        <div class="input-inner-wrap">
+            <input type="text" class="input-inner" placeholder="请输入订单号" ref="inputValue">
+          <span class="button" @click="getInputValue">确 定</span>
+        </div>
+      </div>
+      <div class="gb-layer" @click="open"></div>
     </div>
   </div>
 </template>
@@ -60,92 +70,27 @@ export default {
   },
   data() {
     return {
-      tableColor: {
-        header: [
-          "能源类型",
-          "所在地",
-          "能耗量",
-          "比前一日能耗变化",
-          "能耗总价",
-          "日期",
-        ],
-        listData: [
-          {
-            title: "钱花哪了?一图带你读懂年轻人的消费观",
-            date: "2020-05-05",
-            hot: 2306,
-          },
-          {
-            title: "“五一”假期前三天国内旅游收入超350亿元",
-            date: "2020-05-02",
-            hot: 5689,
-          },
-          {
-            title: "滴滴、美团、哈啰交战，本地生活会是终局？",
-            date: "2020-05-02",
-            hot: 9,
-          },
-          {
-            title: "“互联网+文化”逆势上行文娱消费云端真精彩",
-            date: "2020-04-25",
-            hot: 288,
-          },
-          {
-            title: "乐观还是悲观？巴菲特是个现实主义者！",
-            date: "2020-04-21",
-            hot: 158,
-          },
-          {
-            title: "B站的后浪，会把爱优腾拍在沙滩上吗?",
-            date: "2020-04-20",
-            hot: 889,
-          },
-          {
-            title: "华为如何做投资的：先给两亿订单一年上市",
-            date: "2020-04-01",
-            hot: 5800,
-          },
-          {
-            title: "马斯克：特斯拉股价太高了，我要卖豪宅",
-            date: "2020-03-25",
-            hot: 6,
-          },
-          {
-            title: "人民日报海外版：云模式巧解“就业难”",
-            date: "2020-03-16",
-            hot: 88,
-          },
-          {
-            title: '刚刚港股"崩了"：狂跌近1000点！',
-            date: "2020-03-12",
-            hot: 88,
-          },
-          {
-            title: "个人健康信息码国家标准发布",
-            date: "2020-02-28",
-            hot: 5,
-          },
-          {
-            title: "传软银国际裁员约10%两名管理合伙人离职",
-            date: "2020-02-15",
-            hot: 258,
-          },
-          {
-            title: "27万个岗位：区块链、人工智能等专场招聘",
-            date: "2020-02-10",
-            hot: 198,
-          },
-          {
-            title: "一季度电商发展势头迅猛农村电商破1300万家",
-            date: "2020-02-08",
-            hot: 19,
-          },
-        ],
+      hotArea:1,
+      oldStatus:0,
+      orderId:'',
+      dialogVisibility:false,
+      timer:null,
+      canRun:null,
+      status:0, // 1: 采购申请; 2: 采购申请接收审批; 3: 采购订单; 4: 采购到货; 5: 检验; 6: 采购入库; 7:结束
+      dataV:{ 
+        header1:[ "序号", "物料名称", "数量"],
+        header3:[ "序号", "批次号", "质检员", "生成检验报告时间","审核完成报告时间"],
+        header4:[ "序号", "操作人", "入库时间", "批次号"]
+      },
+      title:{},
+      tableData: {
+        header: [],
+        listData: [],
       },
     }
   },
-  created(){
-    // this.loopsiloop()
+  mounted() {
+    // this.polling(this.orderId)
   },
   computed: {
     titleName() {
@@ -156,92 +101,121 @@ export default {
     },
   },
   methods:{
+    /**
+     *  hotArea { 0: 请求失败, 1:请求成功, 2:请求失败，倒计时结束}
+     */
     loopsiloop(){
-      let hotArea = 0; 
-      setTimeout(()=>{
-        hotArea = 1;
-        this.loopsiloop()
-      }, 5000);
-      new Promise((resolve, reject) => {
-        resolve(1);
-      }).then((res) => {
-        return new Promise((resolve,reject)=>{
-          let tick = 10; // set 10 seconds
-          let callBackFunction = function(){
-            // check if hotArea is hit
-            if(hotArea===1){
-              let res = hotArea;
-              hotArea = 0;
-              clearInterval(timer);
-              return resolve(res)
-            }else{
-              tick = tick-1;
-              console.log('not found! ETA:',tick)
-              if(tick<0){
-                clearInterval(timer);
-                return resolve('timeOut!')
-              }
-            }
-          };
-          let timer = setInterval(callBackFunction, 1000);
-        })
-      }).then((res) => {
-        console.log('timer generates: ',res);
-      });
+      clearInterval(this.timer);
+      this.timer = setInterval( ()=> {
+        this.polling(this.orderId)
+      },5000)
     },
-    async polling() {
-      let { data, ok } = await polling.getPurchasePolling();
-      if(!ok) return; 
+    async polling(orderId) {
+      clearInterval(this.timer);
+      let { data, ok } = await polling.getPurchasePolling(orderId);
+      if(!ok || data.data == null ) {
+        alert("数据为空")
+        this.hotArea = 0;
+        return 
+      }; 
+      this.hotArea = 1;
+      this.oldStatus = data.data.flag
+      this.status = data.data.flag + 1;
+      if( [1,2,3,4].includes(data.data.flag) ) {
+        this.tableData = {
+          header:this.dataV.header1,
+        }
+      }else if ( data.data.flag == 5 ) {
+        this.tableData = {
+          header:this.dataV.header3,
+        }
+      }else if( data.data.flag == 6 ) {
+        this.tableData = {
+          header:this.dataV.header4,
+        }
+      } else {
+        return false
+      }
+      this.title = {
+        createName:data.data.createName,
+        createTime:data.data.createTime,
+      }
+      this.tableData.listData = data.data.list;
+      this.loopsiloop()
+    },
+    open() {
+      this.dialogVisibility = !this.dialogVisibility;
+      this.$refs.inputValue.value = '';
+    },
+    getInputValue() {
+      if(!this.$refs.inputValue.value) { return alert('不能为空')}
+      this.orderId = this.$refs.inputValue.value;
+      this.polling(this.orderId)
+      this.open()
     }
-  }
+  },
+  beforeDestroy() {
+    clearInterval(this.timer);
+  },
 }
 </script>
 
 <style lang='less' scoped>
-@tipWrap-H:90px;
-@tipWrap-W:170px;
+@tipWrap-H:125px;
+@tipWrap-W:240px;
 .energyConsumMonitor {
-  height: 100%;
-  width: 100%;
+  height: 1080px;
+  width: 1920px;
+  box-sizing: border-box;
   .title-size {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
   .intro-size {
     font-size: 1rem;
   }
   .layout-content {
-    height: 89%;
-    width: 98%;
+    height: 958px;
+    width: 1880px;
     .flowChart {
       height: 100%;
       width: 100%;
       background: url(../assets/images/wrap-background.png) no-repeat;
       background-size: 100% 100%;
       position: relative;
+      .input-layer {
+        position: absolute;
+        top: 20px;
+        left: 40px;
+        font-size: 1.5rem;
+        &:hover {
+          cursor: pointer;
+        }
+      }
       .tip-layer {
         height: 100%;
         width: 100%;
         position: absolute;
         top: 0;
         left: 0;
+        z-index: -1;
         .column {
           position: absolute;
-          top: 15%;
-          left: 21.8%;
-          height: 70%;
-          width: 10%;
+          top: 190px;
+          left: 355px;
+          height: 670px;
+          width: 300px;
           .rectangle,.diamond {
             left: 50%;
             transform: translateX(-50%);
             &.top {
-              top: 3%;
+              top: -23px;
             }
             &.center{
-              top: 40.5%;
-              left: 53%;
+              top: 225px;
+              left: 52%;
             }
             &.bottom {
-              bottom: 3%
+              bottom: 64px;
             }
           }
         }
@@ -251,43 +225,53 @@ export default {
           width: 70%;
           bottom: 16%;
           right: 5%;
-          .rectangle {
+          .rectangle,.ellipse {
             top: 50%;
             transform: translateY(-50%);
             &.bottom1 {
               left: 16.5%;
             }
             &.bottom2 {
-              left: 39.5%;
+              left: 517px;
             }
             &.bottom3 {
-              right: 20%;
+              right: 259px;
             }
             &.bottom4 {
-              right: -3%;
+              right: -39px;
             }
           }
         }
-        .rectangle {
+        .rectangle,.ellipse,.diamond {
           position: absolute;
           width: @tipWrap-W;
           height: @tipWrap-H;
+        }
+        .rectangle {
           background:url(../assets/images/rectangle.png) no-repeat;
-          background-size: 100% 100%;
+          background-size: cover;
           &.rectangleActive {
             background:url(../assets/images/rectangle-high.png) no-repeat;
-            background-size: 100% 100%;
+            background-size: cover;
+            animation: shina 2s infinite;
+          }
+        }
+        .ellipse {
+          background:url(../assets/images/ellipse.png) no-repeat;
+          background-size: cover;
+           &.ellipseActive {
+            background:url(../assets/images/ellipse-high.png) no-repeat;
+            background-size: cover;
+            animation: shina 2s infinite;
           }
         }
         .diamond {
-          position: absolute;
-          width: @tipWrap-W;
-          height: @tipWrap-H;
           background:url(../assets/images/diamond.png) no-repeat;
-          background-size: 100% 100%;
+          background-size: cover;
            &.diamondActive {
             background:url(../assets/images/diamond-high.png) no-repeat;
-            background-size: 100% 100%;
+            background-size: cover;
+            animation: shina 2s infinite;
           }
         }
       }
@@ -335,7 +319,81 @@ export default {
       }
     }
   }
- 
+
+  .dialog {
+    height: 1080px;
+    width: 1920px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    .input-wrap {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 200px;
+      background: rgba(52,93,130,.5);
+      border: 1px solid #64A9EF;
+      border-radius: 5px;
+      z-index: 2001;
+      box-shadow: 0 0 10px 2px rgba(0,0,0,.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .input-inner-wrap {
+        // width: 100%;
+        height: 50px;
+        padding: 0 30px;
+        display: flex;
+        align-items: center;
+        .input-inner {
+          height: 40px;
+          width: 200px;
+          font-size: 16px;
+        }
+        .button {
+          margin-left: 15px;
+          display: inline-block;
+          border-radius: 5px;
+          width: 80px;
+          height: 45px;
+          background: #447FC8;
+          color: #fff;
+          font-size: 18px;
+          line-height: 45px;
+          text-align: center;
+          &:hover {
+            cursor: pointer;
+          }
+          // box-shadow: 0 0 10px 2px rgba(0,0,0,.5);
+        }
+      }
+      
+    }
+   .gb-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background:rgba(0,0,0,.8);
+    z-index: 2000;
+    transition: opacity 0.3s linear;
+   }
+  }
+
+  @keyframes shina{
+    0% {
+      opacity: 0;
+    }
+    60% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
  
 }
 </style>

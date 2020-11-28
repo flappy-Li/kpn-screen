@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 
-const APP_APIPATH = 'http://124.128.226.201:28080/'; 
+const APP_APIPATH = 'http://123.135.123.146:39564/'; 
 const env = {
     apiPath:APP_APIPATH
 }

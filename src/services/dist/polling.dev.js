@@ -7,10 +7,10 @@ exports.polling = void 0;
 
 var _http = require("./http.js");
 
-var http = (0, _http.httpCreate)('api/bigscreen/display/');
+var http = (0, _http.httpCreate)('dashboard/');
 var polling = {
-  getPurchasePolling: function getPurchasePolling(tabId) {
-    return http.get("machineInformation".concat(tabId));
+  getPurchasePolling: function getPurchasePolling(orderId) {
+    return http.get("liucheng?s=".concat(orderId));
   }
 };
 exports.polling = polling;

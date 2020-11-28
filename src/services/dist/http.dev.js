@@ -15,7 +15,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var APP_APIPATH = 'http://124.128.226.201:28080/';
+var APP_APIPATH = 'http://123.135.123.146:39564/';
 var env = {
   apiPath: APP_APIPATH
 };

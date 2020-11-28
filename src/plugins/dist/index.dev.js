@@ -16,18 +16,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 // 无缝滚动
-// import chinaMap from '@/components/chinaMap' // 2.5D中国地图
-// import lineEchart from '@/components/lineEchart' // 折线图
-// import dynamicLine from '@/components/dynamicLine' //动态折线图
-// import szBar from '@/components/szBar' //双轴柱状图
-// import rankingbar from '@/components/rankingbar' //排名柱状图
 var components = {
-  seamless: _seamless["default"] // chinaMap,
-  // lineEchart,
-  // szBar,
-  // rankingbar,
-  // dynamicLine,
-
+  seamless: _seamless["default"]
 };
 
 var install = function install() {
