@@ -18,7 +18,7 @@
     </top-header>
     <div class="layout-content constructor-layout column-flex">
         <div class="flowChart">
-          <div class="input-layer" @click="open">采购单查询</div>
+          <div class="input-layer" @click="open">查询</div>
           <div class="backgroundChart-text"></div>
           <div class="tip-layer">
             <div class="column">
@@ -34,9 +34,9 @@
             </div>
           </div>
           <div class="layout-wrap wrap-style column-flex">
-            <div class="hander-top square-wrapBg">采购降本分析</div>
+            <div class="hander-top square-wrapBg">{{oldStatus | tableTitle}}</div>
               <div class="header-layer" v-if="![5,6].includes(oldStatus)">
-                <p>操作人：<span>{{ title.createName}}</span></p>
+                <p>操作人：<span>{{ title.createName || "无"}}</span></p>
                 <p v-if="oldStatus !== 2">创建时间：<span>{{ title.createTime || '无'}}</span></p>
                 <p v-if="oldStatus == 2">审批时间：<span>{{title.createTime}}</span></p>
               </div>
@@ -71,7 +71,7 @@ export default {
   data() {
     return {
       hotArea:1,
-      oldStatus:0,
+      oldStatus:1,
       orderId:'',
       dialogVisibility:false,
       timer:null,
@@ -91,6 +91,12 @@ export default {
   },
   mounted() {
     // this.polling(this.orderId)
+  },
+  filters:{
+    tableTitle(status) {
+      let arr = ['','采购申请', '采购申请接收审批', '采购订单', '采购到货', '检验', '采购入库', '采购入库'];
+      return arr[status]
+    }
   },
   computed: {
     titleName() {
@@ -143,6 +149,7 @@ export default {
       this.tableData.listData = data.data.list;
       this.loopsiloop()
     },
+    
     open() {
       this.dialogVisibility = !this.dialogVisibility;
       this.$refs.inputValue.value = '';
@@ -179,7 +186,7 @@ export default {
     .flowChart {
       height: 100%;
       width: 100%;
-      background: url(../assets/images/wrap-background.png) no-repeat;
+      background: url(../assets/images/erp-bg.png) no-repeat;
       background-size: 100% 100%;
       position: relative;
       .input-layer {
@@ -187,6 +194,13 @@ export default {
         top: 20px;
         left: 40px;
         font-size: 1.5rem;
+        background: #0091ff;
+        width: 80px;
+        height: 38px;
+        line-height: 38px;
+        border-radius: 5px;
+        color: #fff;
+        text-align: center;
         &:hover {
           cursor: pointer;
         }

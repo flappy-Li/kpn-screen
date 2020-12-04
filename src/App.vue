@@ -7,7 +7,7 @@
 <style lang="less">
 @font-face {
   font-family: "txwhgzb";
-  src: url(assets/font/碳纤维汉真广标简体.ttf) format("truetype");
+  src: url(assets/fonts/font.ttf) format("truetype");
 }
 
 * {

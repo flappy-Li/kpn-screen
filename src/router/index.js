@@ -6,9 +6,9 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'purchase',
-    meta: { title: "销售下单-生产-发货流程", intro:'INFORMATION PLATFORM'},
-    component: () => import(/* webpackChunkName: "purchase" */ '../views/purchase.vue'),
+    name: 'polling',
+    meta: { title: "采购流程", intro:'PURCHASE PLATFORM'},
+    component: () => import(/* webpackChunkName: "polling" */ '../views/polling.vue'),
   },
   // {
   //   path: '/purchase',

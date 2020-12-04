@@ -21,14 +21,14 @@ _vue["default"].use(_vueRouter["default"]);
 
 var routes = [{
   path: '/',
-  name: 'purchase',
+  name: 'polling',
   meta: {
-    title: "销售下单-生产-发货流程",
-    intro: 'INFORMATION PLATFORM'
+    title: "采购流程",
+    intro: 'PURCHASE PLATFORM'
   },
   component: function component() {
     return Promise.resolve().then(function () {
-      return _interopRequireWildcard(require('../views/purchase.vue'));
+      return _interopRequireWildcard(require('../views/polling.vue'));
     });
   }
 } // {
